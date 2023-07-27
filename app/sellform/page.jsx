@@ -434,8 +434,6 @@ const SellForm = () => {
 
   const checkFurtherSubcategories = async (selectedCategoryId) => {
     try {
-      console.log("Subcategories id:", selectedCategoryId);
-
       const categoriesRef = collection(db, "categories");
       const subCategoriesQuery = query(
         categoriesRef,
@@ -540,17 +538,17 @@ const SellForm = () => {
           <Image src="/logo.jpg" height={50} width={50} alt="Company Logo" />
         </Link>
       </div>
-      <h3 className="py-10 text-center text-2xl font-bold mb-10">
+      <h3 className="py-1 text-center text-2xl font-bold mb-10">
         POST YOUR AD
       </h3>
       <h3 className="py-1 text-2xl mb-10">Choose Your Category</h3>
-      <div className="grid grid-cols-3 gap-8 px-5 py-1">
+      <div className="grid grid-cols-3 gap-8 px-5 py-0">
         {/* Show main categories */}
         <div className="col-span-1">
           {mainCategories.map((category) => (
             <div
               key={category.id}
-              className="hover:bg-sky-100 p-1 border border-gray-300 rounded-md cursor-pointer mb-4"
+              className="hover:bg-sky-100 p-0 border border-gray-300 rounded-md cursor-pointer mb-0"
               onClick={() => handleMainCategoryClick(category.id)}
             >
               <h3 className="text-lg mt-2">{category.name}</h3>
@@ -573,7 +571,7 @@ const SellForm = () => {
             {subCategories.map((category) => (
               <div
                 key={category.id}
-                className="hover:bg-sky-100 p-1 border border-gray-300 rounded-md cursor-pointer mb-4"
+                className="hover:bg-sky-100 p-0 border border-gray-300 rounded-md cursor-pointer mb-0"
                 onClick={() => handleSubCategoryClick(category.id)}
               >
                 <h3 className="text-lg mt-2">{category.name}</h3>
