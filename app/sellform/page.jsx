@@ -523,6 +523,14 @@ const SellForm = () => {
       console.error("Error adding post:", error);
       alert("Error adding post:", error);
     }
+    // Reset the form and state after successful upload
+    setFormData({
+      title: "",
+      description: "",
+      condition: "",
+      price: "",
+      location: "",
+    });
   };
 
   return (
