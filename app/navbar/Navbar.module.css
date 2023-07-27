@@ -1,0 +1,174 @@
+/* Navbar.module.css */
+
+/* First Line */
+.topLine {
+  max-width: 1280px;
+  margin-left: 19rem;
+  margin-right: 80rem;
+  -webkit-transition: max-width 0.25s ease-in;
+  transition: max-width 0.25s ease-in;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-top: 1rem;
+  row-gap: 20px;
+}
+
+
+.categories a {
+  margin-left: 10px;
+  color: #333;
+  text-decoration: none;
+}
+
+.categories a:hover {
+  color: #666;
+}
+
+/* Second Line */
+.bottomLine {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  -webkit-transition: max-width 0.25s ease-in;
+  transition: max-width 0.25s ease-in;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 1rem 0;
+}
+
+.locationDropdown a {
+  height: 48px;
+  /* width: 17.2rem; */
+  min-width: 17.2rem;
+  background-color: #fff;
+  border-radius: 0.2rem;
+  border: 0.1rem solid #002f34;
+  max-height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.searchBox input[type="text"] {
+  padding-left: 30px;
+
+  display: flex;
+  width: 37.2rem;
+  height: 45px;
+  border-radius: 0.2rem;
+  border: 0.1rem solid #002f34;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  color: #002f34;
+  -webkit-text-size-adjust: 100%;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  letter-spacing: normal;
+  font-family: Roboto, Helvetica, sans-serif;
+  -webkit-box-direction: normal;
+  box-sizing: inherit;
+  -webkit-box-flex: 1;
+  flex: 1;
+}
+
+.login a {
+  padding-right: 30px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  color: #002f34;
+  -webkit-text-size-adjust: 100%;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  letter-spacing: normal;
+  font-family: Roboto, Helvetica, sans-serif;
+  -webkit-box-direction: normal;
+  box-sizing: inherit;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  margin-left: 3.2rem;
+}
+
+.sellButton button {
+  padding: 8px 16px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.sellButton button:hover {
+  background-color: #666;
+  width: auto;
+}
+
+/* Third Line */
+.thirdLine {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  color: #002f34;
+  -webkit-text-size-adjust: 100%;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  letter-spacing: normal;
+  font-family: Roboto, Helvetica, sans-serif;
+  -webkit-box-direction: normal;
+  box-sizing: inherit;
+  margin-left: auto;
+  margin-right: auto;
+  transition: max-width 0.25s ease-in;
+  position: relative;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  max-width: 1024px;
+}
+
+.categoriesDropdown a {
+  color: #333;
+  text-decoration: none;
+}
+
+.categories a {
+  /* list-style: none; */
+  /* display: flex; */
+  align-items: center;
+  justify-content: space-between;
+  font-size: large;
+  /* align-items: center;
+  margin-right: 10px;
+  color: #333;
+  text-decoration: none; */
+}
+
+.categories a:hover {
+  color: #30c0d3;
+}
+
+.allCategories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  position: absolute;
+}
+
+.categoriesList {
+  list-style: none;
+  padding: 0;
+}
+
+.categoryItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Add spacing between items */
+}
+
+.categoryItem img {
+  margin-right: 10px; /* Add spacing between the image and text */
+}
