@@ -99,7 +99,7 @@ const Mobile_phones = () => {
   return (
     <MainLayout>
       <div>
-        <h2 className="px-80 text-2xl font-bold mb-10 py-20">
+        <h2 className="text-black px-80 text-2xl font-bold mb-10 py-20">
           Mobile Phones List
         </h2>
         <div className="px-80 grid grid-cols-4 gap-4">
@@ -116,7 +116,9 @@ const Mobile_phones = () => {
                   className="rounded-md"
                 />
                 <p className="text-gray-800 font-bold mt-1">Rs {ad.price}</p>
-                <h3 className="text-lg font-semibold mt-2">{ad.title}</h3>
+                <h3 className="text-black text-lg font-semibold mt-2">
+                  {ad.title}
+                </h3>
                 <p className="text-gray-600">{ad.location}</p>
               </div>
             </Link>

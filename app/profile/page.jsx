@@ -6,9 +6,7 @@ import { db } from "../../firebase"; // Update the path to your Firebase configu
 // import MainLayout from "@/components/layout/RootLayout";
 import MainLayout from "../../components/layout/RootLayout";
 
-
 const Profile = ({ user }) => {
-  
   console.log({ user });
   const [formData, setFormData] = useState({
     full_name: user?.full_name || "",
@@ -43,55 +41,62 @@ const Profile = ({ user }) => {
 
   return (
     <MainLayout>
-
-    <div>
-      <h1> Edit Profile</h1>
-      <form onSubmit={handleSubmit}>
-        <div class="mb-70">
-          <label htmlFor="full_name">Full Name</label>
-          <input
-            type="text"
-            id="full_name"
-            name="full_name"
-            value={formData.full_name}
-            onChange={handleChange}
-          />
-        </div>
-        <div class="mb-4">
-          <label htmlFor="gender">Gender</label>
-          <input
-            type="text"
-            id="gender"
-            name="gender"
-            value={formData.gender}
-            onChange={handleChange}
-          />
-        </div>
-        <div class="mb-4">
-          <label htmlFor="contact_no">Contact No</label>
-          <input
-            type="tel"
-            id="contact_no"
-            name="contact_no"
-            value={formData.contact_no}
-            onChange={handleChange}
-          />
-        </div>
-        <div class="mb-4">
-          <label htmlFor="about_me">About Me</label>
-          <textarea
-            id="about_me"
-            name="about_me"
-            value={formData.about_me}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit" class="w-full">
-          Save Changes
-        </button>
-      </form>
-    </div>
-            </MainLayout>
+      <div>
+        <h1 className="text-black"> Edit Profile</h1>
+        <form onSubmit={handleSubmit}>
+          <div class="mb-70">
+            <label className="text-black" htmlFor="full_name">
+              Full Name
+            </label>
+            <input
+              type="text"
+              id="full_name"
+              name="full_name"
+              value={formData.full_name}
+              onChange={handleChange}
+            />
+          </div>
+          <div class="mb-4">
+            <label className="text-black" htmlFor="gender">
+              Gender
+            </label>
+            <input
+              type="text"
+              id="gender"
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
+            />
+          </div>
+          <div class="mb-4">
+            <label className="text-black" htmlFor="contact_no">
+              Contact No
+            </label>
+            <input
+              type="tel"
+              id="contact_no"
+              name="contact_no"
+              value={formData.contact_no}
+              onChange={handleChange}
+            />
+          </div>
+          <div class="mb-4">
+            <label className="text-black" htmlFor="about_me">
+              About Me
+            </label>
+            <textarea
+              id="about_me"
+              name="about_me"
+              value={formData.about_me}
+              onChange={handleChange}
+            />
+          </div>
+          <button type="submit" class="w-full">
+            Save Changes
+          </button>
+        </form>
+      </div>
+    </MainLayout>
   );
 };
 

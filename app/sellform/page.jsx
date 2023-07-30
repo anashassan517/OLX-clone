@@ -362,7 +362,9 @@ const SellForm = () => {
   });
   const router = useRouter();
   const [user, loading, error] = useAuthState(auth); // Assuming 'auth' is your Firebase authentication object
-
+  const [furtherSubCategories, setFurtherSubCategories] = useState([]);
+  const [showFurtherSubcategories, setShowFurtherSubcategories] =
+    useState(false);
   const [base64Images, setBase64Images] = useState([]);
   useEffect(() => {
     // Fetch main categories from Firestore
@@ -386,6 +388,7 @@ const SellForm = () => {
     fetchMainCategories();
   }, []);
 
+  // Fetch subcategories when the user hovers over a main category
   const fetchSubCategories = async (parentId) => {
     try {
       const categoriesRef = collection(db, "categories");
@@ -413,43 +416,27 @@ const SellForm = () => {
     const subCategoriesData = await fetchSubCategories(categoryId);
     setSubCategories(subCategoriesData);
     setShowSubcategories(subCategoriesData.length > 0);
+    setShowFurtherSubcategories(false); // Hide further subcategories
     setShowForm(false); // Reset form visibility when a new main category is clicked
   };
 
   const handleSubCategoryClick = async (categoryId) => {
     setSelectedSubCategory(categoryId);
-    // setShowForm(true); // Show the form when a subcategory is clicked
-
     // Check if the selected subcategory has further nested subcategories
-    const hasFurtherSubcategories = await checkFurtherSubcategories(categoryId);
-    console.log("checkFurtherSubcategories length:", checkFurtherSubcategories);
-    if (hasFurtherSubcategories != null) {
-      setSubCategories(hasFurtherSubcategories);
-      setShowSubcategories(hasFurtherSubcategories);
-      setShowForm(false);
-    }
-    setShowForm(true);
-    // Show the form when a subcategory is clicked
+    const furtherSubCategoriesData = await fetchSubCategories(categoryId);
+    setFurtherSubCategories(furtherSubCategoriesData);
+    setShowFurtherSubcategories(furtherSubCategoriesData.length > 0);
+    setShowForm(furtherSubCategoriesData.length === 0); // Show the form when a subcategory is clicked
   };
+  const handleFurtherSubCategoryClick = async (categoryId) => {
+    setSelectedSubCategory(categoryId);
+    // Check if the selected subcategory has further nested subcategories
+    const furtherSubCategoriesData = await fetchSubCategories(categoryId);
+    setFurtherSubCategories(furtherSubCategoriesData);
+    setShowFurtherSubcategories(furtherSubCategoriesData.length > 0);
+    setSelectedSubCategory(categoryId);
 
-  const checkFurtherSubcategories = async (selectedCategoryId) => {
-    try {
-      const categoriesRef = collection(db, "categories");
-      const subCategoriesQuery = query(
-        categoriesRef,
-        where("parentid", "==", selectedCategoryId)
-      );
-      const snapshot = await getDocs(subCategoriesQuery);
-      const subCategoriesData = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-
-      return subCategoriesData;
-    } catch (error) {
-      console.error("Error fetching subcategories:", error);
-      return false;
-    }
+    setShowForm(true); // Show the form when a further subcategory is clicked
   };
 
   const handleChange = (e) => {
@@ -507,29 +494,41 @@ const SellForm = () => {
         images: imageUrls,
         // Add other relevant fields as needed
       };
-      console.log(
-        "SUBMITTED MAIN AND SUB ID:",
-        selectedMainCategory,
-        selectedSubCategory
-      );
       const postsRef = collection(db, "posts");
       await addDoc(postsRef, post);
 
       console.log("Post added successfully!");
       alert("Post added successfully!");
+      setFormData({
+        title: "",
+        description: "",
+        condition: "",
+        price: "",
+        location: "",
+      });
     } catch (error) {
       console.error("Error adding post:", error);
       alert("Error adding post:", error);
+      setFormData({
+        title: "",
+        description: "",
+        condition: "",
+        price: "",
+        location: "",
+      });
     }
-    // Reset the form and state after successful upload
-    setFormData({
-      title: "",
-      description: "",
-      condition: "",
-      price: "",
-      location: "",
-    });
   };
+
+  if (loading) {
+    // You can show a loading indicator here if needed
+    return <div>Loading...</div>;
+  }
+
+  if (error || !user) {
+    // User is not authenticated, redirect to the login page
+    router.push("/login"); // Replace "/login" with the actual path to your login page
+    return null;
+  }
 
   return (
     <div>
@@ -538,17 +537,22 @@ const SellForm = () => {
           <Image src="/logo.jpg" height={50} width={50} alt="Company Logo" />
         </Link>
       </div>
-      <h3 className="py-1 text-center text-2xl font-bold mb-10">
+      <h3 className="text-black py-1 text-center text-2xl font-bold mb-10">
         POST YOUR AD
       </h3>
-      <h3 className="py-1 text-2xl mb-10">Choose Your Category</h3>
-      <div className="grid grid-cols-3 gap-8 px-5 py-0">
+      <h3 className="text-black py-1 text-2xl mb-10">Choose Your Category</h3>
+      <div className="text-black grid grid-cols-3 gap-8 px-5 py-0">
         {/* Show main categories */}
         <div className="col-span-1">
           {mainCategories.map((category) => (
             <div
               key={category.id}
-              className="hover:bg-sky-100 p-0 border border-gray-300 rounded-md cursor-pointer mb-0"
+              // className="hover:bg-sky-100 p-0 border active:bg-sky-200 border-gray-300 rounded-md cursor-pointer mb-0"
+              className={`hover:bg-sky-100 p-0 border border-gray-300 rounded-md cursor-pointer mb-0 ${
+                selectedMainCategory.includes(category.id)
+                  ? "bg-sky-200"
+                  : "text-black"
+              }`}
               onClick={() => handleMainCategoryClick(category.id)}
             >
               <h3 className="text-lg mt-2">{category.name}</h3>
@@ -565,13 +569,17 @@ const SellForm = () => {
           ))}
         </div>
 
-        {/* Show subcategories when the user hovers over a main category */}
+        {/* Show subcategories when the user clicks on a main category */}
         {showSubcategories && (
           <div className="col-span-1">
             {subCategories.map((category) => (
               <div
                 key={category.id}
-                className="hover:bg-sky-100 p-0 border border-gray-300 rounded-md cursor-pointer mb-0"
+                className={`hover:bg-sky-100 p-0 border border-gray-300 rounded-md cursor-pointer mb-0 ${
+                  selectedSubCategory.includes(category.id)
+                    ? "bg-sky-200"
+                    : "text-black"
+                }`}
                 onClick={() => handleSubCategoryClick(category.id)}
               >
                 <h3 className="text-lg mt-2">{category.name}</h3>
@@ -579,11 +587,34 @@ const SellForm = () => {
             ))}
           </div>
         )}
+
+        {/* Show further subcategories when the user clicks on a subcategory */}
+        {showFurtherSubcategories && (
+          <div className="col-span-1">
+            {furtherSubCategories.map((category) => (
+              <div
+                key={category.id}
+                className={`hover:bg-sky-100 p-0 border border-gray-300 rounded-md cursor-pointer mb-0 ${
+                  selectedSubCategory.includes(category.id)
+                    ? "bg-sky-200"
+                    : "text-black"
+                }`}
+                onClick={() => handleFurtherSubCategoryClick(category.id)}
+              >
+                <h3 className="text-lg mt-2">{category.name}</h3>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-      {showForm && selectedSubCategory && (
-        <div className="max-w-screen-xl mx-auto p-6">
+
+      {!showFurtherSubcategories && showForm && selectedSubCategory && (
+        <div className="text-black max-w-screen-xl mx-auto p-6">
           {/* ... (existing code for the form) */}
           <form onSubmit={handleSubmit} className="dropzone space-y-4">
+            <h4 className="text-black py-1 text-center text-2xl font-bold">
+              Include Details
+            </h4>
             <label className="px-4 py-4">
               Ad Title:
               <input

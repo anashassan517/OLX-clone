@@ -73,9 +73,9 @@ const Navbar = () => {
             <Image src="/logo.jpg" height={50} width={50} alt="Company Logo" />
           </Link>
         </div>
-        <div className="px-7 flex-auto">
+        <div className="text-black px-7 flex-auto">
           <Link href="/motors">Motors</Link>
-          <Link className="px-5" href="/property">
+          <Link className="text-black px-5" href="/property">
             Property
           </Link>
         </div>
@@ -108,8 +108,8 @@ const Navbar = () => {
             </div>
             {showDropdown && (
               <ul className="p-7 absolute top-12 right-0 bg-white rounded shadow">
-                <h2 className="text-center text-1x1">Hello,</h2>
-                <h3 className="text-center text-1xl font-bold mb-4">
+                <h2 className="text-black text-center text-1x1">Hello,</h2>
+                <h3 className="text-black text-center text-1xl font-bold mb-4">
                   {user.displayName}
                 </h3>
 

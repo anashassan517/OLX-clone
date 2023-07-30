@@ -4,13 +4,12 @@ import Link from "next/link";
 const Categories = () => {
   return (
     <div>
-      <h2 className="py-5 px-80 text-xl font-bold mb-16">All Categories</h2>
-      <ul className="px-80 mt-2 pd:300 flex space-x-10">
+      <h2 className="text-black py-5 px-80 text-xl font-bold">
+        All Categories
+      </h2>
+      <ul className="text-black px-80 mt-2 pd:300 flex space-x-10 py-5">
         <li>
-          <Link
-            href="/mobile-phones/6FagwH9vFhhCH7LOD3lt"
-            className="flex flex-col items-center"
-          >
+          <Link href="/mobile-phones" className="flex flex-col items-center">
             <Image
               src="/images/mobiles.png"
               width={100}
@@ -21,10 +20,10 @@ const Categories = () => {
           </Link>
         </li>
         <li>
-          <Link href="/vehicles" className="flex flex-col items-center">
+          <Link href="/motors" className="flex flex-col items-center">
             <Image
               src="/images/vehicles.png"
-              width={100}
+              width={100} 
               height={50}
               alt="Vehicles"
             />

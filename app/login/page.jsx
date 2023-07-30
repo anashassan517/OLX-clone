@@ -40,7 +40,7 @@ const Login = () => {
           <Image src="/logo.jpg" alt="OLX Logo" width={200} height={200} />
         </Link>
       </div>
-      <h2 className="text-3xl font-bold mb-4">WELCOME TO OLX</h2>
+      <h2 className="text-black text-3xl font-bold mb-4">WELCOME TO OLX</h2>
       <p className="text-gray-600 mb-8">
         The trusted community of buyers and sellers.
       </p>

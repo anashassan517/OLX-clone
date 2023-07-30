@@ -38,7 +38,9 @@ const Motors = () => {
   return (
     <MainLayout>
       <div>
-        <h2 className="px-80 text-2xl font-bold mb-10 py-20">Motors List</h2>
+        <h2 className="text-black px-80 text-2xl font-bold mb-10 py-20">
+          Motors List
+        </h2>
         <div className="px-80 grid grid-cols-4 ">
           {ads.map((ad) => (
             <Link key={ad.id} href={`/ad/${ad.id}`}>
@@ -51,7 +53,9 @@ const Motors = () => {
                   objectFit="cover"
                 />
                 <p className="text-gray-800 font-bold mt-1">Rs {ad.price}</p>
-                <h3 className="text-lg font-semibold mt-2">{ad.title}</h3>
+                <h3 className="text-black text-lg font-semibold mt-2">
+                  {ad.title}
+                </h3>
                 <p className="text-gray-600">{ad.location}</p>
               </div>
             </Link>

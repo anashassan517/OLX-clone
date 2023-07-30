@@ -14,7 +14,7 @@ const AdDetail = async ({ params }) => {
   return (
     <MainLayout>
       <div className="max-w-screen-xl mx-auto p-6">
-        <h2 className="px-80 text-3xl font-bold mb-10">{title}</h2>
+        <h2 className="text-black px-80 text-3xl font-bold mb-10">{title}</h2>
         <div className="grid grid-cols-2 gap-4">
           <div>
             {images.map((image, index) => (
@@ -32,11 +32,17 @@ const AdDetail = async ({ params }) => {
             <p className="px-52 text-gray-800 text-2xl font-bold mt-1">
               Rs {price}
             </p>
-            <h3 className="px-52 text-lg font-semibold mt-2">Description:</h3>
+            <h3 className="text-black px-52 text-lg font-semibold mt-2">
+              Description:
+            </h3>
             <p className="px-52 text-gray-600">{description}</p>
-            <h3 className="px-52 text-lg font-semibold mt-2">Condition:</h3>
+            <h3 className="text-black px-52 text-lg font-semibold mt-2">
+              Condition:
+            </h3>
             <p className="px-52 text-gray-600">{condition}</p>
-            <h3 className="px-52 text-lg font-semibold mt-2">Location:</h3>
+            <h3 className="text-black px-52 text-lg font-semibold mt-2">
+              Location:
+            </h3>
             <p className="px-52 text-gray-600">{location}</p>
           </div>
         </div>

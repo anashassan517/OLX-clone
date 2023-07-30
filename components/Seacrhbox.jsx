@@ -59,8 +59,8 @@ const Searchbox = () => {
       {showSearchbox &&
         filteredAds.map((ad) => (
           <Link key={ad.id} href={`/ad/${ad.id}`}>
-            <div className="p-2 w-80 border border-gray-300 rounded-md">
-              <h3 className="text-lg mt-2">{ad.title}</h3>
+            <div className=" text-black p-2 w-80 border border-gray-300 rounded-md">
+              <h3 className="text-black text-lg mt-2">{ad.title}</h3>
             </div>
           </Link>
         ))}
