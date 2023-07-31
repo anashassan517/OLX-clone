@@ -132,6 +132,14 @@ const Navbar = () => {
                 </li>
                 <li>
                   <Link
+                    href="/wishlist"
+                    className="text-gray-800 block px-4 py-2 hover:bg-sky-100"
+                  >
+                    Wish List
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     href="/buy-package"
                     className="text-gray-800 block px-4 py-2 hover:bg-sky-100"
                   >

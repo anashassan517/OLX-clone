@@ -115,12 +115,32 @@ import Link from "next/link";
 import Image from "next/image";
 import { collection, query, where, limit, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
+import { getAuth } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
 const Adds = () => {
   const [mobileAds, setMobileAds] = useState([]);
   const [carAds, setCarAds] = useState([]);
   const [watchAds, setWatchAds] = useState([]);
+  const auth = getAuth();
 
+  // Function to handle adding an ad to the user's wishlist
+  const handleAddToWishlist = async (adId) => {
+    try {
+      const user = auth.currentUser;
+      if (!user) {
+        console.error("User is not logged in.");
+        return;
+      }
+
+      const adRef = doc(db, "users", user.uid, "wishlist", adId);
+      await setDoc(adRef, { adId });
+
+      console.log(`Ad with ID ${adId} added to the user's wishlist.`);
+    } catch (error) {
+      console.error("Error adding ad to the user's wishlist:", error);
+    }
+  };
   useEffect(() => {
     // Fetch ads data from Firestore for each category
     const fetchAds = async () => {
@@ -181,23 +201,20 @@ const Adds = () => {
           Mobile Phones
         </h2>
         <div className="px-80 grid grid-cols-4 gap-4">
-          {mobileAds.map((ad) => (
-            <Link key={ad.id} href={`/ad/${ad.id}`}>
-              <div className="p-2 w-60 border border-gray-300 rounded-md">
-                <Image
-                  src={ad.images[0]}
-                  alt={ad.title}
-                  width={200}
-                  height={200}
-                />
-                <p className="text-gray-800 font-bold mt-1">Rs {ad.price}</p>
-                <h3 className="text-black text-lg font-semibold mt-2">
-                  {ad.title}
-                </h3>
-                <p className="text-gray-600">{ad.location}</p>
-              </div>
-            </Link>
-          ))}
+        {mobileAds.map((ad) => (
+          <div key={ad.id} className="p-2 w-60 border border-gray-300 rounded-md">
+            <Image src={ad.images[0]} alt={ad.title} width={200} height={200} />
+            <p className="text-gray-800 font-bold mt-1">Rs {ad.price}</p>
+            <h3 className="text-black text-lg font-semibold mt-2">{ad.title}</h3>
+            <p className="text-gray-600">{ad.location}</p>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+              onClick={() => handleAddToWishlist(ad.id)}
+            >
+              Add to Wishlist
+            </button>
+          </div>
+        ))}
         </div>
       </div>
 
