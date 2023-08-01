@@ -135,7 +135,11 @@ const Navbar = () => {
                     href="/wishlist"
                     className="text-gray-800 block px-4 py-2 hover:bg-sky-100"
                   >
+<<<<<<< HEAD
                     WishList
+=======
+                    Wish List
+>>>>>>> ccb6945de2b4500ddc46968aa706cf0deedffd88
                   </Link>
                 </li>
                 <li>
