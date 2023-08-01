@@ -19,22 +19,14 @@ const Adds = () => {
     try {
       const user = auth.currentUser;
       if (!user) {
-<<<<<<< HEAD
         alert("User is not logged in.");
-=======
-        console.error("User is not logged in.");
->>>>>>> ccb6945de2b4500ddc46968aa706cf0deedffd88
         return;
       }
 
       const adRef = doc(db, "users", user.uid, "wishlist", adId);
       await setDoc(adRef, { adId });
 
-<<<<<<< HEAD
       alert(`Ad added to the user's wishlist.`);
-=======
-      console.log(`Ad with ID ${adId} added to the user's wishlist.`);
->>>>>>> ccb6945de2b4500ddc46968aa706cf0deedffd88
     } catch (error) {
       console.error("Error adding ad to the user's wishlist:", error);
     }
@@ -100,7 +92,6 @@ const Adds = () => {
         </h2>
         <div className="px-80 grid grid-cols-4 gap-4">
         {mobileAds.map((ad) => (
-<<<<<<< HEAD
           <div key={ad.id} className="border border-gray-300 rounded-md">   
             <Link href={`/ad/${ad.id}`}>
                   <Image
@@ -126,19 +117,6 @@ const Adds = () => {
             <h3 className="text-black text-lg font-semibold mt-2">{ad.title}</h3>
             <p className="text-gray-600">{ad.location}</p>
           
-=======
-          <div key={ad.id} className="p-2 w-60 border border-gray-300 rounded-md">
-            <Image src={ad.images[0]} alt={ad.title} width={200} height={200} />
-            <p className="text-gray-800 font-bold mt-1">Rs {ad.price}</p>
-            <h3 className="text-black text-lg font-semibold mt-2">{ad.title}</h3>
-            <p className="text-gray-600">{ad.location}</p>
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
-              onClick={() => handleAddToWishlist(ad.id)}
-            >
-              Add to Wishlist
-            </button>
->>>>>>> ccb6945de2b4500ddc46968aa706cf0deedffd88
           </div>
         ))}
         </div>
