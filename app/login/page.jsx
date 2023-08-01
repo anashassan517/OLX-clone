@@ -5,10 +5,11 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { auth, googleProvider } from "../../firebase";
+import { db, auth, googleProvider } from "../../firebase";
 import { signInWithPopup } from "firebase/auth";
 import FacebookLoginButton from "./FacebookLoginButton";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 
 const Login = () => {
   const [user, setUser] = useState(null);
@@ -27,6 +28,29 @@ const Login = () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
+
+      // Update user details on Firestore
+      const userRef = doc(
+        collection(db, "users"),
+        user.uid,
+        "user_profile",
+        user.uid
+      );
+      await setDoc(
+        userRef,
+        {
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          contact_no: user.phoneNumber,
+          location: " ",
+          gender: " ",
+          about_me: " ",
+          // Add any other user details you want to store in Firestore
+        },
+        { merge: true }
+      );
+
       console.log(user); // You can access user information here
     } catch (error) {
       console.error(error);

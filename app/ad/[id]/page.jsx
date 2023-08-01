@@ -1,8 +1,9 @@
-import React from "react";
+import Footer from "@/components/Footer";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import Image from "next/image";
 import MainLayout from "../../../components/layout/RootLayout";
+import React from "react";
 
 const AdDetail = async ({ params }) => {
   const { id } = params;
@@ -12,6 +13,7 @@ const AdDetail = async ({ params }) => {
   const { ad } = await getData(id);
   const { title, description, condition, price, location, images } = ad;
   return (
+    <>
     <MainLayout>
       <div className="max-w-screen-xl mx-auto p-6">
         <h2 className="text-black px-80 text-3xl font-bold mb-10">{title}</h2>
@@ -48,6 +50,9 @@ const AdDetail = async ({ params }) => {
         </div>
       </div>
     </MainLayout>
+      <Footer/>
+                </>
+
   );
 };
 

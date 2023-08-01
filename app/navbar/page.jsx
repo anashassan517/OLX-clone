@@ -75,7 +75,7 @@ const Navbar = () => {
         </div>
         <div className="text-black px-7 flex-auto">
           <Link href="/motors">Motors</Link>
-          <Link className="text-black px-5" href="/property">
+          <Link className="text-black px-5" href="/property-for-sale">
             Property
           </Link>
         </div>
