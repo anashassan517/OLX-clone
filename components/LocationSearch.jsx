@@ -3,11 +3,11 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import Link from "next/link";
 
-const Searchbox = () => {
+const LocationSearch = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredAds, setFilteredAds] = useState([]);
   const [allAds, setAllAds] = useState([]);
-  const [showSearchbox, setShowSearchbox] = useState(false);
+  const [showLocationSearch, setShowLocationSearch] = useState(false);
 
   useEffect(() => {
     // Fetch all ads data from Firestore
@@ -33,7 +33,7 @@ const Searchbox = () => {
       // Filter ads based on the search query
       if (allAds.length > 0) {
         const filteredAds = allAds.filter((ad) =>
-          ad.title.toLowerCase().includes(searchQuery.toLowerCase())
+          ad.location.toLowerCase().includes(searchQuery.toLowerCase())
         );
         setFilteredAds(filteredAds);
       }
@@ -45,22 +45,23 @@ const Searchbox = () => {
 
   const handleSearchInputChange = (e) => {
     setSearchQuery(e.target.value);
-    setShowSearchbox(e.target.value !== ""); // Toggle the showSearchbox based on search query
+    setShowLocationSearch(e.target.value !== ""); // Toggle the showLocationSearch based on search query
   };
 
   return (
     <div>
       <input
         type="text"
-        placeholder="Find Cars, Mobile Phones and more..."
+        placeholder="Search City, Karachi, Lahore .."
         value={searchQuery}
         onChange={handleSearchInputChange}
       />
-      {showSearchbox &&
+      {showLocationSearch &&
         filteredAds.map((ad) => (
           <Link key={ad.id} href={`/ad/${ad.id}`}>
             <div className=" text-black p-2 border border-gray-300 rounded-md">
               <h5 className="text-black mt-0">{ad.title}</h5>
+              <h6 className="text-black text-xs mt-0">{ad.location}</h6>
             </div>
           </Link>
         ))}
@@ -68,4 +69,4 @@ const Searchbox = () => {
   );
 };
 
-export default Searchbox;
+export default LocationSearch;

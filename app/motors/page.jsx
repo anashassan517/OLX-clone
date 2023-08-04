@@ -7,7 +7,8 @@ import { getAuth } from "firebase/auth";
 import { db } from "../../firebase";
 import MainLayout from "@/components/layout/RootLayout";
 import Footer from "@/components/Footer";
-
+import AdItem from "@/components/Aditem";
+import AdSkeleton from "@/components/AdSkeleton";
 const Motors = () => {
   const [ads, setAds] = useState([]);
   const auth = getAuth();
@@ -64,34 +65,15 @@ const Motors = () => {
             Motors List
           </h2>
           <div className="px-80 grid grid-cols-4 gap-4">
+            {!ads.length ? (
+              Array.from({ length: 4 }).map((_, idx) => (
+                <AdSkeleton loading={true} key={idx} />
+              ))
+            ) : (
+              <></>
+            )}
             {ads.map((ad) => (
-              <div key={ad.id} className="border border-gray-300 rounded-md">
-                <Link href={`/ad/${ad.id}`}>
-                  <Image
-                    className="object-cover h-48 w-96"
-                    src={ad.images[0]}
-                    alt={ad.title}
-                    width={200}
-                    height={200}
-                  />
-                </Link>
-                <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <button onClick={() => handleAddToWishlist(ad.id)}>
-                    <Image
-                      className="py-5 flex items-end"
-                      src="/images/wishlist-heart.png"
-                      height={45}
-                      width={45}
-                      alt="wishlist heart"
-                    />
-                  </button>
-                </div>
-                <p className="text-gray-800 font-bold mt-1">Rs {ad.price}</p>
-                <h3 className="text-black text-lg font-semibold mt-2">
-                  {ad.title}
-                </h3>
-                <p className="text-gray-600">{ad.location}</p>
-              </div>
+              <AdItem key={ad.id} ad={ad} />
             ))}
           </div>
         </div>

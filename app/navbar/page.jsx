@@ -2,27 +2,13 @@
 import Link from "next/link";
 import styles from "./Navbar.module.css";
 import Image from "next/image";
-
 import CategoriesDropdown from "../../components/CategoriesDropdown";
 import Searchbox from "../../components/Seacrhbox";
+import LocationSearch from "../../components/LocationSearch";
 import { useEffect } from "react";
-// arrow function () => {}
-// function name() {}
-
-// Class based or Functional based
-
-// States --> What/Why/How
-// Props
-// Hooks --> Why/How/How many --> useState/useEffect
-// Component Lifecycle events in functional components
-// Composable / Higher Order Component
-// Conditional Rendering
-// Mapping Data
-
 import { auth } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import React, { useState } from "react";
-// import { profile } from "./";
 
 const handleLogout = () => {
   auth.signOut();
@@ -38,6 +24,9 @@ const Navbar = () => {
   };
   const [filteredAds, setFilteredAds] = useState([]);
   const [allAds, setAllAds] = useState([]);
+  const [filteredLocation, setFilteredLocation] = useState([]);
+  const [allLocation, setAllLocation] = useState([]);
+  const [locationQuery, setlocationQuery] = useState("");
 
   useEffect(() => {
     // Fetch all ads data from Firestore
@@ -59,18 +48,27 @@ const Navbar = () => {
 
   useEffect(() => {
     // Filter ads based on the search query
+    const filteredLocation = allLocation.filter((ad) =>
+      ad.location.toLowerCase().includes(locationQuery.toLowerCase())
+    );
+    setFilteredLocation(filteredLocation);
+  }, [locationQuery, allLocation]);
+
+  useEffect(() => {
+    // Filter ads based on the search query
     const filteredAds = allAds.filter((ad) =>
       ad.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredAds(filteredAds);
   }, [searchQuery, allAds]);
+
   return (
     <nav className="bg-slate-50">
       <title>OLX - Buy And Sell For Free Enywhere</title>
       <div className={styles.topLine}>
         <div>
           <Link href="/">
-            <Image src="/logo.jpg" height={50} width={50} alt="Company Logo" />
+            <Image src="/logo.svg" height={70} width={70} alt="Company Logo" />
           </Link>
         </div>
         <div className="text-black px-7 flex-auto">
@@ -82,13 +80,16 @@ const Navbar = () => {
       </div>
       <div className={styles.bottomLine}>
         <div className={styles.searchBox}>
-          <input type="text" placeholder="Pakistan" />
+          <LocationSearch
+            searchQuery={locationQuery}
+            setSearchQuery={setSearchQuery}
+          />
         </div>
 
         <div className={styles.searchBox}>
           <Searchbox
             searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
+            setSearchQuery={setlocationQuery}
           />
         </div>
 
@@ -101,13 +102,13 @@ const Navbar = () => {
               <Image
                 src="/images/iconProfilePicture.png"
                 alt="Profile image"
-                width={200}
-                height={100}
+                width={40}
+                height={40}
                 className="rounded-full"
               />
             </div>
             {showDropdown && (
-              <ul className="p-7 absolute top-12 right-0 bg-white rounded shadow">
+              <ul className=" absolute top-12 right-0 bg-white rounded shadow">
                 <h2 className="text-black text-center text-1x1">Hello,</h2>
                 <h3 className="text-black text-center text-1xl font-bold mb-4">
                   {user.displayName}
@@ -158,20 +159,16 @@ const Navbar = () => {
             )}
           </div>
         ) : (
-          <div className="text-black">
-            <Link href="/login">Login</Link>
-          </div>
-        )}
-
-        <div className={styles.sellButton}>
-          {/* <button>Sell</button> */}
-          <Link
-            href="/sellform"
-            className="bg-slate-200 text-black font-bold py-4 px-3 rounded"
-          >
-            Sell
+          <Link className="flex items-center text-1xl" href="/login">
+            Login
           </Link>
-        </div>
+        )}
+        <Link
+          href="/sellform"
+          className="bg-slate-200 text-black font-bold py-2 px-3 rounded"
+        >
+          Sell
+        </Link>
       </div>
       <div className={styles.thirdLine}>
         <div className={styles.categoriesDropdown}>
@@ -182,8 +179,6 @@ const Navbar = () => {
           <Link href="/motors">Cars</Link>
           <Link href="/bikes">Motorcycles</Link>
           <Link href="/property-for-rent">Houses</Link>
-          {/* <Link href="/tv-audio">TV - Video - Audio</Link> */}
-          {/* <Link href="/electronics-and-home-appliances">Appliances</Link> */}
           <Link href="/property-for-sale">Land & Plots</Link>
         </div>
       </div>
@@ -192,95 +187,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-// import React from "react";
-// import { Image, Button, Dropdown, DropdownItem } from "react-bootstrap";
-// import { auth } from "../../firebase";
-// import { useAuthState } from "react-firebase-hooks/auth";
-// import styles from
-
-// const handleLogout = () => {
-//   auth.signOut();
-// };
-
-// const Navbar = () => {
-//   const [user] = useAuthState(auth);
-
-//   return (
-//     <nav className={styles.navbar}>
-//       <title>OLX - Buy And Sell For Free Enywhere</title>
-//       <div className={styles.topLine}>
-//         <div>
-//           <Link href="/">
-//             <Image src="/logo.jpg" height={50} width={50} alt="Company Logo" />
-//           </Link>
-//         </div>
-//         <div className={styles.categoriesProp}>
-//           <Link href="/motors">Motors</Link>
-//           <Link href="/property">Property</Link>
-//         </div>
-//       </div>
-//       <div className={styles.bottomLine}>
-//         <div className={styles.searchBox}>
-//           <input type="text" placeholder="Pakistan" />
-//         </div>
-
-//         <div className={styles.searchBox}>
-//           <input
-//             type="text"
-//             placeholder="Find Cars, Mobile Phones and more..."
-//           />
-//         </div>
-
-//         {user ? (
-//           <>
-//             {
-//               <Image
-//                 src="/images/iconProfilePicture.png"
-//                 alt="Profile image"
-//                 width={20}
-//                 height={50}
-//               >
-//                 <Dropdown
-//                   title={user.name}
-//                   id="profile-dropdown"
-//                   onSelect={handleLogout}
-//                 >
-//                   <DropdownItem href="/profile">View and edit profile</DropdownItem>
-//                   <DropdownItem href="/my-adds">My adds</DropdownItem>
-//                   <DropdownItem href="/buy-package">Buy package</DropdownItem>
-//                   <DropdownItem href="/logout">Log out</DropdownItem>
-//                 </Dropdown>
-//             }
-//           }
-//         ) : (
-//           <div className={styles.login}>
-//             <Link href="/login">Login</Link>
-//           </div>
-//         )}
-
-//         <div className={styles.sellButton}>
-//           <button>Sell</button>
-//         </div>
-//       </div>
-//       <div className={styles.thirdLine}>
-//         <div className={styles.categoriesDropdown}>
-//           <CategoriesDropdown />
-//           {/* <a href="#">All categories</a> */}
-//           {/* <MultilevelDropdown categories={categoriesData} /> */}
-//         </div>
-//         <div className={styles.categories}>
-//           <Link href="/mobile-phones">Mobile Phones</Link>
-//           <Link href="/vehicles">Cars</Link>
-//           <Link href="/bike">Motorcycles</Link>
-//           <Link href="/property-for-rent">Houses</Link>
-//           <Link href="/tv-audio">TV - Video - Audio</Link>
-//           <Link href="/electronics-and-home-appliances">Appliances</Link>
-//           <Link href="/property-for-sale">Land & Plots</Link>
-//         </div>
-//       </div>
-//     </nav>
-//   );
-// };
-
-// export default Navbar;

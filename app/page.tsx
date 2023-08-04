@@ -10,7 +10,7 @@ export default function Home() {
         <div >
           <div >
             <Image src="/banner.jpg" alt="banner image"
-              width={1500}
+              width={1550}
               height={1500}
               className={styles.banner} />
           </div>
@@ -23,7 +23,7 @@ export default function Home() {
 
       </main>
     </MainLayout>
-    
+
 
   );
 }

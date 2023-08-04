@@ -1,29 +1,30 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  getDoc,
-  doc,
-} from "firebase/firestore";
+import { collection, getDocs, getDoc, doc } from "firebase/firestore";
 import { db, auth } from "../firebase";
 import Image from "next/image";
 import Link from "next/link";
 import { deleteDoc } from "firebase/firestore";
 import MainLayout from "@/components/layout/RootLayout";
+import { useRouter } from "next/navigation";
 
+import AdItem from "@/components/Aditem";
+import AdSkeleton from "@/components/AdSkeleton";
 
 const WishlistPage = () => {
   const [wishlistAds, setWishlistAds] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchWishlistAds = async () => {
       try {
         const user = auth.currentUser;
-          const userRef = doc(db, "users", user.uid);
+        if (!user) {
+          router.push("/login");
+          return null;
+        }
+        const userRef = doc(db, "users", user.uid);
         const wishlistRef = collection(userRef, "wishlist");
         const snapshot = await getDocs(wishlistRef);
         const adIds = snapshot.docs.map((doc) => doc.data().adId);
@@ -38,15 +39,13 @@ const WishlistPage = () => {
             wishlistAdsData.push({ adId, ...adData });
           }
         }
-
         setWishlistAds(wishlistAdsData);
-        setLoading(false);
+        // setLoading(false);
       } catch (error) {
         console.error("Error fetching wishlist ads:", error);
-        setLoading(false);
+        // setLoading(false);
       }
     };
-
     fetchWishlistAds();
   }, []);
   const removeFromWishlist = async (adId) => {
@@ -54,12 +53,12 @@ const WishlistPage = () => {
       const user = auth.currentUser;
       if (!user) {
         alert("User is not logged in.");
-        return;
+        // return;
+        router.push("/login");
+        return null;
       }
-
       const adRef = doc(db, "users", user.uid, "wishlist", adId);
       await deleteDoc(adRef);
-
       // Update the wishlistAds state by filtering out the removed ad
       setWishlistAds((prevWishlistAds) =>
         prevWishlistAds.filter((ad) => ad.adId !== adId)
@@ -73,15 +72,20 @@ const WishlistPage = () => {
 
   return (
     <MainLayout>
-
-    <div className="p-4">
-      <h2 className="py-10 text-black text-center text-2xl font-bold mb-4">My Wishlist</h2>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <ul className="px-80 grid grid-cols-4 gap-4">
-           {wishlistAds.map((ad) => (
-      <li key={ad.adId} className="border p-4 rounded-lg shadow-md">
+      <div className="p-4">
+        <h2 className="py-10 text-black text-center text-2xl font-bold mb-4">
+          My Wishlist
+        </h2>
+        <div className="px-80 grid grid-cols-4 gap-4">
+          {!wishlistAds.length ? (
+            Array.from({ length: 8 }).map((_, idx) => (
+              <AdSkeleton loading={true} key={idx} />
+            ))
+          ) : (
+            <></>
+          )}
+          {wishlistAds.map((ad) => (
+            <div key={ad.adId} className="border p-4 rounded-lg shadow-md">
               <Link href={`/ad/${ad.adId}`} className="text-xl font-bold mb-2">
                 <Image
                   className="object-cover h-48 w-96"
@@ -95,18 +99,16 @@ const WishlistPage = () => {
               <p className="text-gray-600 mb-2">Price: Rs {ad.price}</p>
               <p className="text-gray-600">Location: {ad.location}</p>
               <button
-          className="bg-red-500 text-white py-2 px-4 mt-4 rounded-md"
-          onClick={() => removeFromWishlist(ad.adId)}
-        >
-          Remove from Wishlist
-        </button>
-            </li>
+                className="bg-red-500 text-white py-2 px-4 mt-4 rounded-md"
+                onClick={() => removeFromWishlist(ad.adId)}
+              >
+                Remove from Wishlist
+              </button>
+            </div>
           ))}
-        </ul>
-      )}
-    </div>
+        </div>
+      </div>
     </MainLayout>
-
   );
 };
 

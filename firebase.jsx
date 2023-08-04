@@ -9,7 +9,7 @@ import {
   FacebookAuthProvider,
 } from "firebase/auth";
 
-// Your web app's Firebase configuration
+//  web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBGSwsYTeyhObirzl8aBnmSfD1MLM36wrg",
   authDomain: "olx-clone-50038.firebaseapp.com",
