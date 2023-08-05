@@ -49,22 +49,24 @@ const Searchbox = () => {
   };
 
   return (
-    
-    <div>
+    <div className="relative">
       <input
         type="text"
         placeholder="Find Cars, Mobile Phones and more..."
         value={searchQuery}
         onChange={handleSearchInputChange}
       />
-      {showSearchbox &&
-        filteredAds.map((ad) => (
-          <Link key={ad.id} href={`/ad/${ad.id}`}>
-            <div className=" text-black p-2 border border-gray-300 rounded-md">
-              <h5 className="text-black mt-0">{ad.title}</h5>
-            </div>
-          </Link>
-        ))}
+      {showSearchbox && (
+        <div className="absolute z-100 w-full">
+          {filteredAds.map((ad) => (
+            <Link key={ad.id} href={`/ad/${ad.id}`}>
+              <div className=" text-black p-2 border border-gray-300 rounded-md bg-white">
+                <h5 className="text-black mt-0">{ad.title}</h5>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

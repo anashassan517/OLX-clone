@@ -49,22 +49,27 @@ const LocationSearch = () => {
   };
 
   return (
-    <div>
+    <div className="relative">
       <input
         type="text"
         placeholder="Search City, Karachi, Lahore .."
         value={searchQuery}
         onChange={handleSearchInputChange}
       />
-      {showLocationSearch &&
-        filteredAds.map((ad) => (
-          <Link key={ad.id} href={`/ad/${ad.id}`}>
-            <div className=" text-black p-2 border border-gray-300 rounded-md">
-              <h5 className="text-black mt-0">{ad.title}</h5>
-              <h6 className="text-black text-xs mt-0">{ad.location}</h6>
-            </div>
-          </Link>
-        ))}
+      {showLocationSearch ? (
+        <div className="absolute w-full px-1">
+          {filteredAds.map((ad) => (
+            <Link key={ad.id} href={`/ad/${ad.id}`}>
+              <div className=" text-black p-2 border border-gray-300 rounded-md bg-white">
+                <h5 className="text-black mt-0">{ad.title}</h5>
+                <h6 className="text-black text-xs mt-0">{ad.location}</h6>
+              </div>
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

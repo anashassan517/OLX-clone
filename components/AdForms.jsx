@@ -7,7 +7,8 @@ import { db } from "../firebase";
 import { ref, uploadString, getDownloadURL } from "firebase/storage";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
-import { auth } from "../firebase";
+import { getAuth } from "firebase/auth";
+
 const AdForms = ({ selectedMainCategory, selectedSubCategory }) => {
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
@@ -20,7 +21,8 @@ const AdForms = ({ selectedMainCategory, selectedSubCategory }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [base64Images, setBase64Images] = useState([]);
   const router = useRouter();
-
+  const auth = getAuth();
+  const user = auth.currentUser;
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
@@ -75,6 +77,7 @@ const AdForms = ({ selectedMainCategory, selectedSubCategory }) => {
         price: formData.price,
         location: formData.location,
         images: imageUrls,
+        userId: user.uid,
       };
       const postsRef = collection(db, "posts");
       const docRef = await addDoc(postsRef, post);
