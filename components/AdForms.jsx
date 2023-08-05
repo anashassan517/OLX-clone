@@ -107,12 +107,12 @@ const AdForms = ({ selectedMainCategory, selectedSubCategory }) => {
   };
   return (
     <div>
-      <form onSubmit={handleSubmit} className="dropzone space-y-4">
-        <h4 className="text-black py-1 text-center text-2xl font-bold">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <h4 className="text-xl font-bold text-center text-black py-1">
           Include Details
         </h4>
-        <label className="px-4 py-4">
-          Ad Title:
+        <div className="p-4">
+          <label className="block mb-2 font-semibold">Ad Title:</label>
           <input
             type="text"
             name="title"
@@ -120,24 +120,23 @@ const AdForms = ({ selectedMainCategory, selectedSubCategory }) => {
             value={formData.title}
             onChange={handleChange}
             required
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
           />
-        </label>
-        <label className="h-32 w-32 p-4 px-4 py-4">
-          Description:
-          <input
-            type="text"
-            width={300}
+        </div>
+        <div className="p-4">
+          <label className="block mb-2 font-semibold">Description:</label>
+          <textarea
+            rows="4"
             name="description"
             placeholder="Add Details"
             value={formData.description}
             onChange={handleChange}
             required
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full border border-gray-300 rounded-md resize-none focus:outline-none focus:border-blue-500"
           />
-        </label>
-        <label className="px-4 py-4">
-          Condition:
+        </div>
+        <div className="p-4">
+          <label className="block mb-2 font-semibold">Condition:</label>
           <input
             type="text"
             name="condition"
@@ -145,11 +144,11 @@ const AdForms = ({ selectedMainCategory, selectedSubCategory }) => {
             value={formData.condition}
             onChange={handleChange}
             required
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
           />
-        </label>
-        <label className="px-4 py-4">
-          Price:
+        </div>
+        <div className="p-4">
+          <label className="block mb-2 font-semibold">Price:</label>
           <input
             type="number"
             name="price"
@@ -157,11 +156,11 @@ const AdForms = ({ selectedMainCategory, selectedSubCategory }) => {
             value={formData.price}
             onChange={handleChange}
             required
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
           />
-        </label>
-        <label className="px-4 py-4">
-          Location:
+        </div>
+        <div className="p-4">
+          <label className="block mb-2 font-semibold">Location:</label>
           <input
             type="text"
             name="location"
@@ -169,27 +168,25 @@ const AdForms = ({ selectedMainCategory, selectedSubCategory }) => {
             value={formData.location}
             onChange={handleChange}
             required
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
           />
+        </div>
+        <div className="p-4">
+          <label className="block mb-2 font-semibold">Images:</label>
           <input
             type="file"
             accept="image/*"
             multiple
             required
             onChange={handleImageUpload}
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
           />
-        </label>
-        {/* <button
-              type="submit"
-              className="  py-2 px-4 bg-black text-white rounded-md"
-            >
-              Post Now
-            </button> */}
+        </div>
         <div className="flex justify-center mt-4">
           <button
             type="submit"
-            disabled={isSubmitting} // Disable the button while submitting
-            className="py-2 px-4 bg-black text-white rounded-md"
+            disabled={isSubmitting}
+            className="py-2 px-6 bg-black text-white rounded-md hover:bg-gray-800 focus:outline-none"
           >
             {isSubmitting ? (
               <div className="flex items-center">
@@ -207,3 +204,99 @@ const AdForms = ({ selectedMainCategory, selectedSubCategory }) => {
 };
 
 export default AdForms;
+
+// <form onSubmit={handleSubmit} className="dropzone space-y-4">
+//         <h4 className="text-black py-1 text-center text-2xl font-bold">
+//           Include Details
+//         </h4>
+//         <label className="px-4 py-4">
+//           Ad Title:
+//           <input
+//             type="text"
+//             name="title"
+//             placeholder="Title"
+//             value={formData.title}
+//             onChange={handleChange}
+//             required
+//             className="w-full p-2 border border-gray-300 rounded-md"
+//           />
+//         </label>
+//         <label className="h-32 w-32 p-4 px-4 py-4">
+//           Description:
+//           <input
+//             type="text"
+//             width={300}
+//             name="description"
+//             placeholder="Add Details"
+//             value={formData.description}
+//             onChange={handleChange}
+//             required
+//             className="w-full p-2 border border-gray-300 rounded-md"
+//           />
+//         </label>
+//         <label className="px-4 py-4">
+//           Condition:
+//           <input
+//             type="text"
+//             name="condition"
+//             placeholder="New or Used?"
+//             value={formData.condition}
+//             onChange={handleChange}
+//             required
+//             className="w-full p-2 border border-gray-300 rounded-md"
+//           />
+//         </label>
+//         <label className="px-4 py-4">
+//           Price:
+//           <input
+//             type="number"
+//             name="price"
+//             placeholder="Price"
+//             value={formData.price}
+//             onChange={handleChange}
+//             required
+//             className="w-full p-2 border border-gray-300 rounded-md"
+//           />
+//         </label>
+//         <label className="px-4 py-4">
+//           Location:
+//           <input
+//             type="text"
+//             name="location"
+//             placeholder="Add Location"
+//             value={formData.location}
+//             onChange={handleChange}
+//             required
+//             className="w-full p-2 border border-gray-300 rounded-md"
+//           />
+//           <input
+//             type="file"
+//             accept="image/*"
+//             multiple
+//             required
+//             onChange={handleImageUpload}
+//           />
+//         </label>
+//         {/* <button
+//               type="submit"
+//               className="  py-2 px-4 bg-black text-white rounded-md"
+//             >
+//               Post Now
+//             </button> */}
+//         <div className="flex justify-center mt-4">
+//           <button
+//             type="submit"
+//             disabled={isSubmitting} // Disable the button while submitting
+//             className="py-2 px-4 bg-black text-white rounded-md"
+//           >
+//             {isSubmitting ? (
+//               <div className="flex items-center">
+//                 <span className="mr-2">Submitting...</span>
+//                 <div className="animate-spin w-5 h-5 border-t-2 border-b-2 border-white"></div>
+//               </div>
+//             ) : (
+//               "Post Now"
+//             )}
+//           </button>
+//         </div>
+//       </form>

@@ -218,6 +218,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
 import { auth } from "../../firebase";
 import AdForms from "./../../components/AdForms";
+import { Button } from "@nextui-org/react";
 // import AdForm from "./../adform";
 const SellForm = () => {
   const [mainCategories, setMainCategories] = useState([]);
@@ -288,12 +289,11 @@ const SellForm = () => {
   const handleSubCategoryClick = async (categoryId) => {
     setSelectedSubCategory(categoryId);
     // Check if the selected subcategory has further nested subcategories
-    setShowForm(true);
     const furtherSubCategoriesData = await fetchSubCategories(categoryId);
 
     setFurtherSubCategories(furtherSubCategoriesData);
-    setShowForm(furtherSubCategoriesData.length === 0); // Show the form when a subcategory is clicked
     setShowFurtherSubcategories(furtherSubCategoriesData.length > 0);
+    setShowForm(furtherSubCategoriesData.length === 0); // Show the form when a subcategory is clicked
   };
   const handleFurtherSubCategoryClick = async (categoryId) => {
     setSelectedSubCategory(categoryId);
@@ -317,6 +317,11 @@ const SellForm = () => {
     return null;
   }
 
+  const toggleformdisplay = () => {
+    console.log("toggle showform:", showForm);
+    setShowForm((setShowForm) => !setShowForm);
+  };
+
   return (
     <div>
       <nav className="bg-slate-50">
@@ -334,84 +339,98 @@ const SellForm = () => {
             </div>
           </div>
         </div>
-        <h3 className="text-black py-1 text-center text-2xl font-bold mb-10">
-          POST YOUR AD
-        </h3>
-
-        {showForm && selectedSubCategory && (
-          <div className="text-black max-w-screen-xl mx-auto p-6">
-            <AdForms
-              selectedMainCategory={selectedMainCategory}
-              selectedSubCategory={selectedSubCategory}
-            />
-          </div>
-        )}
       </nav>
 
-      {!showForm && (
-        <div className="text-black px-96 grid grid-cols-3 gap-8 py-0">
-          {/* Show main categories */}
-          <div className="col-span-1">
-            {mainCategories.map((category) => (
-              <div
-                key={category.id}
-                className={`hover:bg-sky-100   p-0 border border-gray-300 rounded-md cursor-pointer mb-0 ${
-                  selectedMainCategory.includes(category.id)
-                    ? "bg-sky-200"
-                    : "text-black"
-                }`}
-                onClick={() => handleMainCategoryClick(category.id)}
-              >
-                <h3 className="text-lg">{category.name}</h3>
-                <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <Image
-                    className="flex items-end"
-                    src="/images/right-arrow.png"
-                    height={10}
-                    width={10}
-                    alt="arrow"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-          {/* Show subcategories when the user clicks on a main category */}
-          {showSubcategories && (
-            <div className="col-span-1">
-              {subCategories.map((category) => (
-                <div
-                  key={category.id}
-                  className={`hover:bg-sky-100 p-0 border border-gray-300 rounded-md cursor-pointer mb-0 ${
-                    selectedSubCategory.includes(category.id)
-                      ? "bg-sky-200"
-                      : "text-black"
-                  }`}
-                  onClick={() => handleSubCategoryClick(category.id)}
-                >
-                  <h3 className="text-lg mt-2">{category.name}</h3>
-                </div>
-              ))}
-            </div>
-          )}
+      {showForm && selectedSubCategory && (
+        <div className="text-black max-w-screen-xl mx-auto p-6">
+          <h3 className="text-black py-1 text-center text-2xl font-bold ">
+            POST YOUR AD
+          </h3>
+          <button
+            type="button"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            onClick={toggleformdisplay}
+          >
+            Change Category
+          </button>
 
-          {/* Show further subcategories when the user clicks on a subcategory */}
-          {showFurtherSubcategories && (
+          {/* <button onClick={toggleformdisplay}>change Category</button> */}
+          <AdForms
+            selectedMainCategory={selectedMainCategory}
+            selectedSubCategory={selectedSubCategory}
+          />
+        </div>
+      )}
+
+      {!showForm && (
+        <div>
+          <h4 className="py-20 text-black text-center text-2xl text-font-bold ">
+            Select Category
+          </h4>
+          <div className="text-black px-96 grid grid-cols-3 gap-8 py-10 mb-10">
+            {/* Show main categories */}
             <div className="col-span-1">
-              {furtherSubCategories.map((category) => (
+              {mainCategories.map((category) => (
                 <div
                   key={category.id}
-                  className={`hover:bg-sky-100 p-0 border border-gray-300 rounded-md cursor-pointer mb-0 ${
-                    selectedSubCategory.includes(category.id)
+                  className={`hover:bg-sky-100   p-0 border border-gray-300 rounded-md cursor-pointer mb-0 ${
+                    selectedMainCategory.includes(category.id)
                       ? "bg-sky-200"
                       : "text-black"
                   }`}
-                  onClick={() => handleFurtherSubCategoryClick(category.id)}
+                  onClick={() => handleMainCategoryClick(category.id)}
                 >
-                  <h3 className="text-lg mt-2">{category.name}</h3>
+                  <h3 className="text-lg">{category.name}</h3>
+                  <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                    <Image
+                      className="flex items-end"
+                      src="/images/right-arrow.png"
+                      height={10}
+                      width={10}
+                      alt="arrow"
+                    />
+                  </div>
                 </div>
               ))}
             </div>
-          )}
+            {/* Show subcategories when the user clicks on a main category */}
+            {showSubcategories && (
+              <div className="col-span-1">
+                {subCategories.map((category) => (
+                  <div
+                    key={category.id}
+                    className={`hover:bg-sky-100 p-0 border border-gray-300 rounded-md cursor-pointer mb-0 ${
+                      selectedSubCategory.includes(category.id)
+                        ? "bg-sky-200"
+                        : "text-black"
+                    }`}
+                    onClick={() => handleSubCategoryClick(category.id)}
+                  >
+                    <h3 className="text-lg mt-2">{category.name}</h3>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Show further subcategories when the user clicks on a subcategory */}
+            {showFurtherSubcategories && (
+              <div className="col-span-1">
+                {furtherSubCategories.map((category) => (
+                  <div
+                    key={category.id}
+                    className={`hover:bg-sky-100 p-0 border border-gray-300 rounded-md cursor-pointer mb-0 ${
+                      selectedSubCategory.includes(category.id)
+                        ? "bg-sky-200"
+                        : "text-black"
+                    }`}
+                    onClick={() => handleFurtherSubCategoryClick(category.id)}
+                  >
+                    <h3 className="text-lg mt-2">{category.name}</h3>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>

@@ -49,6 +49,7 @@ const Searchbox = () => {
   };
 
   return (
+    
     <div>
       <input
         type="text"

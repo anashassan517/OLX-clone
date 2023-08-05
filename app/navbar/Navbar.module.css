@@ -36,12 +36,14 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding: 1rem 0;
+  padding: 1rem 10;
 }
 
 .locationDropdown a {
   height: 48px;
   /* width: 17.2rem; */
+  /* width: 27.2rem; */
+
   min-width: 17.2rem;
   background-color: #fff;
   border-radius: 0.2rem;
@@ -50,9 +52,12 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  padding-right: 100px;
+  margin-left: 100px;
 }
 
 .searchBox input[type="text"] {
+  margin: 5px;
   padding-left: 30px;
 
   display: flex;
@@ -89,11 +94,13 @@
   display: flex;
   -webkit-box-align: center;
   align-items: center;
-  margin-left: 3.2rem;
+  margin-left: 30.2rem;
 }
 
 .sellButton button {
-  padding: 8px 16px;
+  margin: 10px;
+  padding-top: 10rem;
+  /* padding: 1px; */
   background-color: #333;
   color: #fff;
   border: none;
