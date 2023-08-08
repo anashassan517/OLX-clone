@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { collection, query, where, limit, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import { getAuth } from "firebase/auth";
 import { doc, setDoc, deleteDoc, getDoc } from "firebase/firestore";
@@ -26,7 +25,7 @@ const AdItem = ({ ad }) => {
     };
     checkWishlist();
   }, [ad.id, auth]);
- 
+
   const handleToggleWishlist = async () => {
     try {
       const user = auth.currentUser;
