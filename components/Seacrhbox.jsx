@@ -57,7 +57,7 @@ const Searchbox = () => {
         onChange={handleSearchInputChange}
       />
       {showSearchbox && (
-        <div className="absolute z-100 w-full">
+        <div className="absolute z-100 w-full px-1">
           {filteredAds.map((ad) => (
             <Link key={ad.id} href={`/ad/${ad.id}`}>
               <div className=" text-black p-2 border border-gray-300 rounded-md bg-white">
