@@ -96,14 +96,14 @@ const Navbar = () => {
         {user ? (
           <div className="relative">
             <div
-              className="w-20 flex items-center cursor-pointer"
+              className="mx-4 w-20 flex items-center cursor-pointer"
               onClick={handleProfileDropdown}
             >
               <Image
                 src="/images/iconProfilePicture.png"
                 alt="Profile image"
-                width={40}
-                height={40}
+                width={50}
+                height={50}
                 className=" rounded-full"
               />
             </div>
@@ -170,13 +170,13 @@ const Navbar = () => {
             )}
           </div>
         ) : (
-          <Link className="flex items-center text-1xl" href="/login">
+          <Link className="text-black mx-4 my-2 text-2xl" href="/login">
             Login
           </Link>
         )}
         <Link
           href="/sellform"
-          className=" bg-slate-300 text-black font-bold py-3 px-3 rounded"
+          className=" bg-slate-300 text-black font-bold py-3 px-6 rounded "
         >
           Sell
         </Link>
